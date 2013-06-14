@@ -1,4 +1,4 @@
-package org.springframework.integration.reactor;
+package org.springframework.integration.reactor.channel;
 
 import org.springframework.integration.Message;
 import org.springframework.integration.channel.AbstractMessageChannel;
