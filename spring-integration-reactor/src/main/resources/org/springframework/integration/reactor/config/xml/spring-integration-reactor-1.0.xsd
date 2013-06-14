@@ -32,7 +32,18 @@
   <xsd:element name="channel">
     <xsd:annotation>
       <xsd:documentation>
-        The definition for the Reactor Message Channel.
+        The definition for the Reactor Direct Message Channel (N producers - 1 consumer).
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:attributeGroup ref="reactorMessageChannelAttributes"/>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="publish-subscribe-channel">
+    <xsd:annotation>
+      <xsd:documentation>
+        The definition for the Reactor Publish Subscribe Message Channel (N producers - N consumers).
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>

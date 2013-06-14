@@ -5,6 +5,7 @@ import org.springframework.integration.channel.AbstractMessageChannel;
 import org.springframework.integration.core.MessageHandler;
 import org.springframework.integration.core.SubscribableChannel;
 import org.springframework.util.Assert;
+import reactor.Fn;
 import reactor.R;
 import reactor.core.Environment;
 import reactor.core.Reactor;
@@ -12,42 +13,54 @@ import reactor.fn.Consumer;
 import reactor.fn.Event;
 import reactor.fn.dispatch.SynchronousDispatcher;
 import reactor.fn.registry.Registration;
+import reactor.fn.selector.Selector;
 
 /**
- * Simple {@link Reactor}-based {@link SubscribableChannel} implementation.
+ * Abstract {@link reactor.core.Reactor}-based {@link org.springframework.integration.core.SubscribableChannel}
+ * implementation.
  *
  * @author Jon Brisbin
+ * @author Stephane Maldini
  */
-public class ReactorChannel extends AbstractMessageChannel implements SubscribableChannel {
+public abstract class AbstractReactorChannel extends AbstractMessageChannel implements SubscribableChannel {
 
 	private final Reactor reactor;
 
-	public ReactorChannel(Environment env, Reactor reactor, String dispatcher) {
-		Assert.notNull(env, "Reactor Environment cannot be null.");
-		if (null == reactor) {
-			Reactor.Spec rspec = R.reactor().using(env);
-			if (null != dispatcher) {
-				if ("sync".equals(dispatcher)) {
-					rspec.using(SynchronousDispatcher.INSTANCE);
-				} else {
-					rspec.dispatcher(dispatcher);
-				}
+	private final Object   key      = new Object();
+	private final Selector selector = Fn.$(key);
+
+	public AbstractReactorChannel(Reactor reactor) {
+		Assert.notNull(reactor, "Reactor cannot be null.");
+		this.reactor = reactor;
+	}
+
+	public AbstractReactorChannel(Reactor.Spec rspec, String dispatcher) {
+		Assert.notNull(rspec, "Reactor.Spec cannot be null.");
+		if (null != dispatcher) {
+			if ("sync".equalsIgnoreCase(dispatcher)) {
+				rspec.sync();
+			} else {
+				rspec.dispatcher(dispatcher);
 			}
-			this.reactor = rspec.get();
-		} else {
-			this.reactor = reactor;
 		}
+		this.reactor = rspec.get();
+	}
+
+	@Override
+	protected void onInit() throws Exception {
+		super.onInit();
+
 	}
 
 	@Override
 	protected boolean doSend(Message<?> message, long timeout) {
-		reactor.notify(Event.wrap(message));
+		reactor.notify(key, Event.wrap(message));
 		return true;
 	}
 
 	@Override
 	public boolean subscribe(MessageHandler handler) {
-		reactor.on(new MessageHandlerConsumer(handler));
+		reactor.on(selector, new MessageHandlerConsumer(handler));
 		return true;
 	}
 

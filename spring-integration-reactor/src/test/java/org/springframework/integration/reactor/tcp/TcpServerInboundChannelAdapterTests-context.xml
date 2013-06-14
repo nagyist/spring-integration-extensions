@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:int="http://www.springframework.org/schema/integration"
-       xmlns:reactor="http://www.springframework.org/schema/integration/reactor"
+       xmlns:int-reactor="http://www.springframework.org/schema/integration/reactor"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
@@ -27,7 +27,7 @@
   <bean id="stringCodec" class="reactor.tcp.encoding.StringCodec"/>
 
   <!-- Reactor TcpServer Inbound Channel Adapter -->
-  <reactor:tcp-inbound-channel-adapter id="server"
+  <int-reactor:tcp-inbound-channel-adapter id="server"
                                        env="reactorEnv"
                                        ref="eventsReactor"
                                        channel="output"
