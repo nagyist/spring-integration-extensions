@@ -24,7 +24,7 @@ public class TcpServerInboundChannelAdapterParser extends AbstractChannelAdapter
 
 		String envBean = element.getAttribute("env");
 		if (!StringUtils.hasText(envBean)) {
-			builder.addConstructorArgValue("reactorEnvironment");
+			builder.addConstructorArgReference("reactorEnvironment");
 		} else {
 			builder.addConstructorArgReference(envBean);
 		}
