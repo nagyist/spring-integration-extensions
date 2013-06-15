@@ -14,7 +14,7 @@ import reactor.core.Reactor;
 public class ReactorDirectChannel extends AbstractReactorChannel {
 
 	public ReactorDirectChannel(Environment env, String dispatcher) {
-		super(R.reactor().using(env).roundRobinEventRouting(), dispatcher);
+		super(R.reactor().using(env).firstEventRouting(), dispatcher);
 	}
 
 	public ReactorDirectChannel(Reactor reactor) {
