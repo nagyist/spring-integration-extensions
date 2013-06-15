@@ -62,7 +62,7 @@
         </xsd:documentation>
       </xsd:annotation>
     </xsd:attribute>
-    <xsd:attribute name="env" use="optional" type="xsd:string">
+    <xsd:attribute name="env" default="reactorEnvironment" use="optional" type="xsd:string">
       <xsd:annotation>
         <xsd:documentation>
           The Reactor Environment to use.
@@ -109,7 +109,7 @@
         </xsd:documentation>
       </xsd:annotation>
     </xsd:attribute>
-    <xsd:attribute name="env" use="optional" type="xsd:string">
+    <xsd:attribute name="env" use="optional" default="reactorEnvironment" type="xsd:string">
       <xsd:annotation>
         <xsd:documentation>
           The Reactor Environment to use.

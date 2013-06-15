@@ -6,7 +6,6 @@ import org.springframework.integration.config.xml.AbstractChannelParser;
 import org.springframework.integration.reactor.channel.ReactorDirectChannel;
 import org.springframework.integration.reactor.channel.ReactorPublishSubscribeChannel;
 import org.w3c.dom.Element;
-import reactor.core.Environment;
 import reactor.util.StringUtils;
 
 /**
@@ -32,7 +31,7 @@ public class ReactorChannelParser extends AbstractChannelParser {
 
 		String envBean = element.getAttribute("env");
 		if (!StringUtils.hasText(envBean)) {
-			builder.addConstructorArgValue(new Environment());
+			builder.addConstructorArgReference("reactorEnvironment");
 		} else {
 			builder.addConstructorArgReference(envBean);
 		}

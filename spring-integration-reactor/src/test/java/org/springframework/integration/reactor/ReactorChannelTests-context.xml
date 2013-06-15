@@ -14,6 +14,8 @@
     <beans:bean id="counter" class="java.util.concurrent.CountDownLatch" c:_0="1" />
     <beans:bean id="counterPubSub" class="java.util.concurrent.CountDownLatch" c:_0="2" />
 
+    <beans:bean id="reactorEnvironment" class="reactor.core.Environment"/>
+
     <int-reactor:channel id="reactor" dispatcher="ringBuffer"/>
 
     <int-reactor:publish-subscribe-channel id="reactorPubSub" dispatcher="ringBuffer"/>

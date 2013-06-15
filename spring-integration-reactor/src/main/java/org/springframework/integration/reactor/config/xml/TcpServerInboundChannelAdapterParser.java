@@ -7,8 +7,6 @@ import org.springframework.integration.config.xml.AbstractChannelAdapterParser;
 import org.springframework.integration.config.xml.IntegrationNamespaceUtils;
 import org.springframework.integration.reactor.tcp.TcpServerInboundChannelAdapter;
 import org.w3c.dom.Element;
-import reactor.R;
-import reactor.core.Environment;
 import reactor.util.StringUtils;
 
 import java.net.InetSocketAddress;
@@ -17,6 +15,7 @@ import java.net.InetSocketAddress;
  * {@code ChannelAdapaterParser} implementation for the {@link TcpServerInboundChannelAdapter}.
  *
  * @author Jon Brisbin
+ * @author Stephane Maldini
  */
 public class TcpServerInboundChannelAdapterParser extends AbstractChannelAdapterParser {
 	@Override
@@ -25,7 +24,7 @@ public class TcpServerInboundChannelAdapterParser extends AbstractChannelAdapter
 
 		String envBean = element.getAttribute("env");
 		if (!StringUtils.hasText(envBean)) {
-			builder.addConstructorArgValue(new Environment());
+			builder.addConstructorArgValue("reactorEnvironment");
 		} else {
 			builder.addConstructorArgReference(envBean);
 		}
