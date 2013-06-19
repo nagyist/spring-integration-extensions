@@ -10,7 +10,7 @@
 
   <logger name="org.springframework.core" level="warn"/>
 
-  <root level="info">
+  <root level="debug">
     <appender-ref ref="stdout"/>
   </root>
 

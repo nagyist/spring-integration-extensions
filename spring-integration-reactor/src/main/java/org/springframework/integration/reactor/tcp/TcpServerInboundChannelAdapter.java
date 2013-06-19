@@ -58,7 +58,7 @@ public class TcpServerInboundChannelAdapter<IN, OUT> extends MessageProducerSupp
 		this.env = env;
 		this.bindAddress = bindAddress;
 		this.codec = codec;
-		this.eventsReactor = (null != eventsReactor ? eventsReactor : R.reactor().using(env).get());
+		this.eventsReactor = (null != eventsReactor ? eventsReactor : R.reactor().using(env).sync().get());
 
 		this.eventsReactor.on(T(Throwable.class), new Consumer<Event<Throwable>>() {
 			@Override
